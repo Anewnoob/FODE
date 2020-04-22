@@ -12,17 +12,17 @@ ReLU_1                 x                  128
 Dense_2              H x W              1 x H x W
 ReLU_1                 x                1 x H x W
 FODE_1                128               1 x H x W
-Addition               x                1 x H x W          coarse-grained external feature
+Addition_input         x                1 x H x W          coarse-grained external feature
 --------------------------------------------------------
-#Upsampling
+#Upsampling     (factor = 4) 
 Conv_1             3-1-1-4             4 x H x W
-BN                    x                4 x H x W
-PixelShuffle          x                1 × 2H × 2W
-ReLU                  x                1 × 2H × 2W
-Conv_2             3-1-1-4             4 x 2H x 2W
-BN                    x                4 x 2H x 2W
-PixelShuffle          x                1 × 4H × 4W
-ReLU                  x                1 × 4H × 4W         fine-grained external feature
+BN_1                    x                4 x H x W
+PixelShuffle_1          x                1 × 2H × 2W
+ReLU_1                  x                1 × 2H × 2W
+Conv_2               3-1-1-4             4 x 2H x 2W
+BN_2                    x                4 x 2H x 2W
+PixelShuffle_2          x                1 × 4H × 4W
+ReLU_2                  x                1 × 4H × 4W         fine-grained external feature
 -----------------------------------------------------
 
 
@@ -35,18 +35,17 @@ Contat_e              x                 2 x H x W
 Input_conv         9-1-4-128          128 x H x W
 FODE_2                x               128 x H x W
 --------------------------------------------------------
-#Upsampling  (factor = 4)  
-Conv_1             3-1-1-4             4 x H x W
-BN                    x                4 x H x W
-PixelShuffle          x                1 × 2H × 2W
-ReLU                  x                1 × 2H × 2W
-Conv_2             3-1-1-4             4 x 2H x 2W
-BN                    x                4 x 2H x 2W
-PixelShuffle          x                1 × 4H × 4W
-ReLU                  x                1 × 4H × 4W   
+#Upsampling      (factor = 4)  
+Conv_1             3-1-1-4*128          4*128 x H x W
+BN_1                    x               4*128 x H x W
+PixelShuffle_1          x               128 x 2H x 2W
+ReLU_1                  x               128 x 2H x 2W
+Conv_2             3-1-1-4*128          4*128 x 2H x 2W
+BN_2                    x               4*128 x 2H x 2W
+PixelShuffle_2          x               128 x 4H x 4W
+ReLU_2                  x               128 x 4H x 4W
 ---------------------------------------------------------
-
-
-
-
-The details of other network settings of S-FODE
+Output_conv        9-1-4-128            1 x 4H x 4W
+ReLU                    x               1 x 4H x 4W
+Addition_Ef             x               1 x 4H x 4W
+---------------------------------------------------------
