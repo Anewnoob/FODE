@@ -15,7 +15,7 @@ FODE_1                128               1 x H x W
 Addition_input         x                1 x H x W          coarse-grained external feature
 --------------------------------------------------------
 #Upsampling     (factor = 4) 
-Conv_1             3-1-1-4             4 x H x W
+Conv_1               3-1-1-4             4 x H x W
 BN_1                    x                4 x H x W
 PixelShuffle_1          x                1 × 2H × 2W
 ReLU_1                  x                1 × 2H × 2W
