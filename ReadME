@@ -4,15 +4,15 @@ The details of other network settings in proposed FSR architecture, where settin
 Input_shape (batch_size, 12)
 Output_shape (batch_size, 4, H, W)
 --------------------------------------------------------
-Layer               Setting             Output
+Layer               Setting                Output
 --------------------------------------------------------
-Dense_1               128                 128
-Dropout               0.5                 128
-ReLU_1                 x                  128
-Dense_2              H x W              1 x H x W
-ReLU_1                 x                1 x H x W
-FODE_1                128               1 x H x W
-Addition_input         x                1 x H x W          coarse-grained external feature
+Dense_1               128                   128
+Dropout               0.5                   128
+ReLU_1                 x                    128
+Dense_2              H x W               1 x H x W
+ReLU_1                 x                 1 x H x W
+FODE_1                128                1 x H x W
+Addition_input         x                 1 x H x W          coarse-grained external feature
 --------------------------------------------------------
 #Upsampling     (factor = 4) 
 Conv_1               3-1-1-4             4 x H x W
@@ -24,16 +24,18 @@ BN_2                    x                4 x 2H x 2W
 PixelShuffle_2          x                1 × 4H × 4W
 ReLU_2                  x                1 × 4H × 4W         fine-grained external feature
 -----------------------------------------------------
+AN2-Normalization       x                1 x 4H x 4W
+-----------------------------------------------------
 
 #Main body
 Input shape : (batch_size, 1, H, W)
 Outshape : (batch_size, 1, 4H , 4W)
 --------------------------------------------------------
-Layer               Setting             Output
+Layer               Setting                  Output
 --------------------------------------------------------
-Contat_e              x                 2 x H x W
-Input_conv         9-1-4-128          128 x H x W
-FODE_2                x               128 x H x W
+Contat_e              x                    2 x H x W
+Input_conv         9-1-4-128             128 x H x W
+FODE_2                x                  128 x H x W
 --------------------------------------------------------
 #Upsampling      (factor = 4)  
 Conv_1             3-1-1-4*128          4*128 x H x W
@@ -48,4 +50,6 @@ ReLU_2                  x               128 x 4H x 4W
 Output_conv        9-1-4-128            1 x 4H x 4W
 ReLU                    x               1 x 4H x 4W
 Addition_Ef             x               1 x 4H x 4W
+---------------------------------------------------------
+AN2-Normalization       x               1 x 4H x 4W
 ---------------------------------------------------------
